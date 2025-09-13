@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Comprehensive Penetration Test Report</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --primary: #007bff;
+            --secondary: #6c757d;
+            --info: #17a2b8;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --border-radius: 0.5rem;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: var(--font-family-base);
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            color: var(--dark);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--secondary);
+            font-size: 1rem;
+        }
+
+        .section {
+            margin-bottom: 2.5rem;
+        }
+
+        .section h2 {
+            font-size: 1.75rem;
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-card {
+            background-color: var(--light);
+            border: 1px solid #e9ecef;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .summary-item {
+            text-align: center;
+        }
+
+        .summary-item .num {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .summary-item .label {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+        }
+
+        th,
+        td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: bold;
+        }
+
+        .finding {
+            border: 1px solid #e9ecef;
+            border-left: 4px solid;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+        }
+
+        .finding.high {
+            border-left-color: var(--danger);
+        }
+
+        .finding.medium {
+            border-left-color: var(--warning);
+        }
+
+        .finding.low {
+            border-left-color: var(--info);
+        }
+
+        .finding h3 {
+            margin-top: 0;
+            font-size: 1.25rem;
+        }
+
+        .finding .severity {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .finding .severity.high {
+            background-color: var(--danger);
+        }
+
+        .finding .severity.medium {
+            background-color: var(--warning);
+        }
+
+        .finding .severity.low {
+            background-color: var(--info);
+        }
+
+        .recommendation {
+            background-color: #e9ffed;
+            border-left: 4px solid var(--success);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin-top: 1rem;
+        }
+
+        .code {
+            background-color: #f1f3f5;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Web Application Penetration Test Report</h1>
+            <p>Target: <strong>coach.mastersunion.org</strong> | Date: <strong>September 13, 2025</strong> | Tester:
+                <strong>Paras / Team</strong></p>
+        </header>
+
+        <section class="section">
+            <h2>Executive Summary</h2>
+            <p>
+                A focused penetration test was performed against <strong>coach.mastersunion.org</strong>. The assessment
+                combined authenticated and unauthenticated scans (Nmap, Nikto) and manual checks for common web
+                vulnerabilities. This report outlines the highest priority findings, provides a concise risk summary,
+                and recommends next steps for remediation.
+            </p>
+            <div class="summary-card">
+                <div class="summary-item">
+                    <div class="num">3</div>
+                    <div class="label">High severity findings</div>
+                </div>
+                <div class="summary-item">
+                    <div class="num">4</div>
+                    <div class="label">Medium severity findings</div>
+                </div>
+                <div class="summary-item">
+                    <div class="num">6</div>
+                    <div class="label">Low informational findings</div>
+                </div>
+                <div class="summary-item">
+                    <div class="num">2</div>
+                    <div class="label">Open Ports (443, 22)</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Findings & Recommendations</h2>
+
+            <div class="finding high">
+                <span class="severity high">HIGH</span>
+                <h3>Sensitive Data in JWT Token</h3>
+                <p>
+                    An authenticated Nmap scan revealed that the JWT token, used for session authentication, contains
+                    sensitive Personally Identifiable Information (PII) such as the user's name, email, and mobile
+                    number in plain text. This data is not encrypted and is easily readable, posing a significant data
+                    leakage risk if the token is intercepted.
+                </p>
+                <div class="recommendation">
+                    <h4>Recommendation:</h4>
+                    <p>
+                        The JWT token payload should not contain sensitive PII. Remove this information from the token
+                        and instead use a non-descriptive identifier (e.g., a UUID) to reference user data on the
+                        server-side.
+                    </p>
+                </div>
+            </div>
+
+            <div class="finding medium">
+                <span class="severity medium">MEDIUM</span>
+                <h3>Missing HTTP Security Headers</h3>
+                <p>
+                    Nikto and Nmap scans identified that the website is missing key security headers. The
+                    <code>X-Frame-Options</code> header, which prevents clickjacking attacks, is not present.
+                    Additionally, the <code>Strict-Transport-Security</code> (HSTS) header is not defined.
+                </p>
+                <div class="recommendation">
+                    <h4>Recommendation:</h4>
+                    <p>
+                        Implement the following headers to improve security:
+                    <ul>
+                        <li><code>X-Frame-Options: SAMEORIGIN</code> to prevent clickjacking.</li>
+                        <li><code>Strict-Transport-Security</code> to enforce HTTPS and protect against
+                            man-in-the-middle attacks.</li>
+                        <li><code>X-Content-Type-Options: nosniff</code> to prevent MIME type sniffing.</li>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+
+            <div class="finding medium">
+                <span class="severity medium">MEDIUM</span>
+                <h3>Sensitive Files Exposed</h3>
+                <p>
+                    The Nikto scan found sensitive file exposures, specifically an <code>.htpasswd</code> file which
+                    could contain user credentials or hashes. This file should not be publicly accessible.
+                </p>
+                <div class="recommendation">
+                    <h4>Recommendation:</h4>
+                    <p>
+                        Remove the exposed sensitive file. Ensure that web server configurations prevent direct access
+                        to such files in the future.
+                    </p>
+                </div>
+            </div>
+
+            <div class="finding low">
+                <span class="severity low">LOW</span>
+                <h3>Open Ports</h3>
+                <p>
+                    Nmap scan of all ports on the target host found that ports 21 (FTP), 80 (HTTP), and 443 (HTTPS) are
+                    open. This exposes additional services that could be potential attack vectors.
+                </p>
+                <div class="recommendation">
+                    <h4>Recommendation:</h4>
+                    <p>
+                        Close any unnecessary ports. The FTP service on port 21 is not recommended for a public-facing
+                        website and should be closed if not required. Harden the security of all open ports by applying
+                        the latest patches and secure configurations.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Scan Details</h2>
+            <p>Details about the executed scans:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tool</th>
+                        <th>Version</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Duration</th>
+                        <th>Scan Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Nikto</td>
+                        <td>2.5.0</td>
+                        <td>2025-09-13 15:19:42</td>
+                        <td>2025-09-13 15:20:13</td>
+                        <td>31 sec</td>
+                        <td>69 requests</td>
+                    </tr>
+                    <tr>
+                        <td>Nmap</td>
+                        <td>7.95</td>
+                        <td>2025-09-13 13:12:37</td>
+                        <td>2025-09-13 14:07:06</td>
+                        <td>55 min</td>
+                        <td>65532 ports scanned</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="section">
+            <h2>Conclusion</h2>
+            <p>
+                The target <strong>coach.mastersunion.org</strong> exhibits several security vulnerabilities across
+                authentication, HTTP security headers, and network exposure. The most critical finding is the leakage of
+                sensitive PII within the JWT token. Recommendations have been provided to mitigate the identified risks.
+                It is strongly advised to prioritize the high-severity fixes and re-scan the application after
+                remediation to validate the changes.
+            </p>
+        </section>
+    </div>
+</body>
+
+</html>

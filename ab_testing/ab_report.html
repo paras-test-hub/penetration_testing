@@ -1,0 +1,69 @@
+<h1 id="apache-bench-report-50k-requests">Apache Bench Report (50k
+Requests)</h1>
+<h2 id="test-500-users">Test: 500 Users</h2>
+<p>This is ApacheBench, Version 2.3 &lt;$Revision: 1923142 $&gt;
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/</p>
+<p>Benchmarking api.mastersunion.in (be patient)</p>
+<p>Server Software:<br />
+Server Hostname: api.mastersunion.in Server Port: 443 SSL/TLS Protocol:
+TLSv1.2,ECDHE-RSA-AES128-GCM-SHA256,2048,128 Server Temp Key: ECDH
+prime256v1 256 bits TLS Server Name: api.mastersunion.in</p>
+<p>Document Path: / Document Length: 39 bytes</p>
+<p>Concurrency Level: 500 Time taken for tests: 55.791 seconds Complete
+requests: 50000 Failed requests: 101 (Connect: 0, Receive: 0, Length:
+101, Exceptions: 0) Non-2xx responses: 101 Keep-Alive requests: 50000
+Total transferred: 86993546 bytes HTML transferred: 1958383 bytes
+Requests per second: 896.20 [#/sec] (mean) Time per request: 557.914
+[ms] (mean) Time per request: 1.116 [ms] (mean, across all concurrent
+requests) Transfer rate: 1522.72 [Kbytes/sec] received</p>
+<p>Connection Times (ms) min mean[+/-sd] median max Connect: 0 11 113.5
+0 2020 Processing: 61 536 625.1 407 9435 Waiting: 61 536 625.1 407 9435
+Total: 61 547 634.1 409 9435</p>
+<p>Percentage of the requests served within a certain time (ms) 50% 409
+66% 540 75% 637 80% 689 90% 1011 95% 1326 98% 1736 99% 2949 100% 9435
+(longest request) ## Test: 100 Users This is ApacheBench, Version 2.3
+&lt;$Revision: 1923142 $&gt; Copyright 1996 Adam Twiss, Zeus Technology
+Ltd, http://www.zeustech.net/ Licensed to The Apache Software
+Foundation, http://www.apache.org/</p>
+<p>Benchmarking api.mastersunion.in (be patient)</p>
+<p>Server Software:<br />
+Server Hostname: api.mastersunion.in Server Port: 443 SSL/TLS Protocol:
+TLSv1.2,ECDHE-RSA-AES128-GCM-SHA256,2048,128 Server Temp Key: ECDH
+prime256v1 256 bits TLS Server Name: api.mastersunion.in</p>
+<p>Document Path: / Document Length: 39 bytes</p>
+<p>Concurrency Level: 100 Time taken for tests: 65.950 seconds Complete
+requests: 50000 Failed requests: 8 (Connect: 0, Receive: 0, Length: 8,
+Exceptions: 0) Non-2xx responses: 8 Keep-Alive requests: 50000 Total
+transferred: 87091568 bytes HTML transferred: 1950664 bytes Requests per
+second: 758.15 [#/sec] (mean) Time per request: 131.900 [ms] (mean) Time
+per request: 1.319 [ms] (mean, across all concurrent requests) Transfer
+rate: 1289.62 [Kbytes/sec] received</p>
+<p>Connection Times (ms) min mean[+/-sd] median max Connect: 0 1 23.9 0
+1314 Processing: 58 128 52.6 115 837 Waiting: 58 128 52.6 115 837 Total:
+58 129 57.7 115 1418</p>
+<p>Percentage of the requests served within a certain time (ms) 50% 115
+66% 132 75% 146 80% 155 90% 185 95% 220 98% 283 99% 328 100% 1418
+(longest request) ## Test: 1000 Users This is ApacheBench, Version 2.3
+&lt;$Revision: 1923142 $&gt; Copyright 1996 Adam Twiss, Zeus Technology
+Ltd, http://www.zeustech.net/ Licensed to The Apache Software
+Foundation, http://www.apache.org/</p>
+<p>Benchmarking api.mastersunion.in (be patient)</p>
+<p>Server Software:<br />
+Server Hostname: api.mastersunion.in Server Port: 443 SSL/TLS Protocol:
+TLSv1.2,ECDHE-RSA-AES128-GCM-SHA256,2048,128 Server Temp Key: ECDH
+prime256v1 256 bits TLS Server Name: api.mastersunion.in</p>
+<p>Document Path: / Document Length: 39 bytes</p>
+<p>Concurrency Level: 1000 Time taken for tests: 109.343 seconds
+Complete requests: 50000 Failed requests: 35 (Connect: 0, Receive: 0,
+Length: 35, Exceptions: 0) Non-2xx responses: 35 Keep-Alive requests:
+50000 Total transferred: 87063110 bytes HTML transferred: 1952905 bytes
+Requests per second: 457.28 [#/sec] (mean) Time per request: 2186.862
+[ms] (mean) Time per request: 2.187 [ms] (mean, across all concurrent
+requests) Transfer rate: 777.58 [Kbytes/sec] received</p>
+<p>Connection Times (ms) min mean[+/-sd] median max Connect: 0 83 847.1
+0 69372 Processing: 187 1676 1456.3 1252 18906 Waiting: 89 1676 1456.3
+1252 18906 Total: 365 1759 1671.0 1267 70188</p>
+<p>Percentage of the requests served within a certain time (ms) 50% 1267
+66% 1558 75% 1813 80% 1990 90% 4295 95% 5460 98% 6269 99% 6838 100%
+70188 (longest request)</p>

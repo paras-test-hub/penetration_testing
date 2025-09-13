@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Apache Bench — Detailed Performance Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #071225;
+            --card: #07142a;
+            --accent: #06b6d4;
+            --muted: #94a3b8;
+            --glass: rgba(255, 255, 255, 0.03)
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+            margin: 0;
+            background: linear-gradient(180deg, #021025 0%, #071225 100%);
+            color: #e6eef6
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 28px auto;
+            padding: 22px
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            gap: 16px
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 20px
+        }
+
+        .meta {
+            color: var(--muted);
+            font-size: 13px
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 18px
+        }
+
+        .card {
+            background: var(--card);
+            padding: 16px;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(2, 6, 23, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.03)
+        }
+
+        .big {
+            grid-column: 1/4
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px
+        }
+
+        th,
+        td {
+            padding: 10px 8px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            font-size: 13px
+        }
+
+        th {
+            color: var(--muted);
+            font-weight: 600
+        }
+
+        .kpi {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff
+        }
+
+        .label {
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        .bar {
+            height: 10px;
+            background: var(--glass);
+            border-radius: 8px;
+            overflow: hidden
+        }
+
+        .bar>i {
+            display: block;
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), #7c3aed)
+        }
+
+        .section {
+            margin-top: 20px
+        }
+
+        .observations li {
+            margin: 8px 0
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: linear-gradient(90deg, var(--accent), #7c3aed);
+            color: #021025;
+            text-decoration: none;
+            font-weight: 700
+        }
+
+        footer {
+            margin-top: 26px;
+            color: var(--muted);
+            font-size: 12px
+        }
+
+        pre {
+            background: #031427;
+            padding: 12px;
+            border-radius: 8px;
+            overflow: auto
+        }
+
+        .muted {
+            color: var(--muted)
+        }
+
+        @media(max-width:900px) {
+            .grid {
+                grid-template-columns: 1fr
+            }
+
+            .big {
+                grid-column: 1/2
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div
+                style="width:56px;height:56px;background:linear-gradient(180deg,#06202a,#08243a);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent)">
+                AB</div>
+            <div>
+                <h1>Apache Bench — Detailed Performance Report</h1>
+                <div class="meta">Target: <strong>https://api.mastersunion.in/</strong> • Tests: multiple scenarios •
+                    Generated report<br>Prepared by: <strong>Paras Sen</strong>, Quality Assurance Engineer</div>
+            </div>
+        </header>
+
+        <div class="grid section">
+            <div class="card">
+                <div class="label">Executive summary</div>
+                <div class="kpi">High-level findings</div>
+                <div style="margin-top:10px;color:var(--muted);font-size:13px">
+                    This report summarises Apache Bench (ab) load tests executed against the target. It explains test
+                    configuration, key performance indicators (throughput, latency, errors), and actionable
+                    observations.
+                    All raw output files were captured and are included alongside this report for verification.
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="label">Test environment</div>
+                <div style="margin-top:6px;color:var(--muted);font-size:13px">
+                    <ul style="margin:6px 0;padding-left:16px;">
+                        <li>Kali Linux (running on Windows)</li>
+                        <li>ab (ApacheBench) from apache2-utils</li>
+                        <li>Authentication: JWT token supplied via Authorization header (environment variable)</li>
+                        <li>Files attached: raw `ab_report.html` and `ab_report.pdf`</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="label">Recommendations (short)</div>
+                <div style="margin-top:10px;color:var(--muted);font-size:13px">
+                    <ol style="padding-left:16px;margin:0">
+                        <li>Run tests on a staging environment to avoid impacting production.</li>
+                        <li>Monitor server metrics (CPU, memory, net I/O) during test runs.</li>
+                        <li>Gradually ramp concurrency instead of one-shot high-concurrency tests.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="card big">
+                <div class="label">What the AB report contains (explained)</div>
+                <div style="margin-top:12px;color:var(--muted);font-size:13px">
+                    Apache Bench output includes several important sections — here is how to read them and what they
+                    tell you about the system:
+                    <ul style="margin-top:8px;padding-left:16px;">
+                        <li><strong>Concurrency Level</strong> — how many simultaneous requests were made. Higher
+                            concurrency stresses connection handling and thread pools.</li>
+                        <li><strong>Time taken for tests</strong> — total wall-clock time to finish all requests; used
+                            with total requests to compute throughput.</li>
+                        <li><strong>Complete requests / Failed requests</strong> — success vs failure count. Failed
+                            requests indicate server errors, timeouts, or network problems.</li>
+                        <li><strong>Requests per second (RPS)</strong> — average throughput. Useful to compare across
+                            runs.</li>
+                        <li><strong>Time per request (mean)</strong> — average latency (both per concurrent client and
+                            across all requests).</li>
+                        <li><strong>Percentage served within X ms</strong> — latency distribution (50%, 90%, 95%, 99%
+                            percentiles) — crucial for understanding tail latency experienced by users.
+                        </li>
+                        <li><strong>Transfer rate</strong> — data throughput in Kbytes/sec. Shows bandwidth usage.
+                        </li>
+                        <li><strong>Socket errors</strong> — e.g. connect errors or timeouts; often indicate saturation
+                            or network issues.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="card">
+                <div class="label">Interpreting common results</div>
+                <ol style="padding-left:16px;color:var(--muted);font-size:13px">
+                    <li><strong>High RPS with low latency</strong> — service handles load well.</li>
+                    <li><strong>Rising latency with concurrency</strong> — queueing at app server or DB; investigate
+                        thread pool and DB connection limits.</li>
+                    <li><strong>Many failed requests</strong> — check server logs for 5xx errors, timeouts, or rate
+                        limiting.</li>
+                    <li><strong>High p95/p99</strong> — outliers likely caused by GC pauses, slow DB queries, or
+                        background jobs blocking request threads.</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="card big">
+                <div class="label">Test scenarios (executed)</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Scenario</th>
+                            <th>Total requests</th>
+                            <th>Concurrency</th>
+                            <th>Notes / Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Baseline</td>
+                            <td>50,000</td>
+                            <td>100</td>
+                            <td>Steady throughput test</td>
+                        </tr>
+                        <tr>
+                            <td>Target</td>
+                            <td>50,000</td>
+                            <td>500</td>
+                            <td>Main test (auth header used)</td>
+                        </tr>
+                        <tr>
+                            <td>Stress</td>
+                            <td>50,000</td>
+                            <td>1000</td>
+                            <td>Observe saturation and failures</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card big">
+            <div class="label">Results — summary (raw outputs attached)</div>
+            <div style="margin-top:12px;color:var(--muted);font-size:13px">
+                Below are the key metrics extracted automatically from ab_report.html.
+            </div>
+
+            <table style="margin-top:12px">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Value</th>
+                        <th>Interpretation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Requests/sec</td>
+                        <td><strong>896.20</strong></td>
+                        <td>Average throughput — higher is better (for same hardware).</td>
+                    </tr>
+                    <tr>
+                        <td>Time per request (mean)</td>
+                        <td><strong>131.9 ms</strong></td>
+                        <td>Average latency per request.</td>
+                    </tr>
+                    <tr>
+                        <td>Failed requests</td>
+                        <td><strong>101</strong></td>
+                        <td>Non-zero indicates server/network errors to investigate.</td>
+                    </tr>
+                    <tr>
+                        <td>p95 / p99</td>
+                        <td><strong>1326 ms / 2949 ms</strong></td>
+                        <td>Tail latency. Important for user experience.</td>
+                    </tr>
+                    <tr>
+                        <td>Transfer rate</td>
+                        <td><strong>1522.72 KB/sec</strong></td>
+                        <td>Bandwidth used during test.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="section">
+            <div class="card">
+                <div class="label">Observations & recommended next steps</div>
+                <ul class="observations" style="color:var(--muted);font-size:13px">
+                    <li>Correlate peak latency with server CPU/memory and application logs to find bottlenecks.</li>
+                    <li>If failed requests are > 0, gather server error logs (500s) and analyze stack traces.</li>
+                    <li>Tune thread pools, DB connection pools, or add caching (Redis) for repeated read-heavy
+                        endpoints.</li>
+                    <li>Consider running longer soak tests (hours) to detect resource leaks.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="card big">
+                <div class="label">Raw output (example snippet)</div>
+                <pre id="raw-output" class="muted"># Paste the raw `ab` output here or attach the file for automatic parsing.
+# Example lines to look for:
+# Requests per second:    123.45 [#/sec] (mean)
+# Time per request:       456.78 [ms] (mean)
+# Failed requests:        0
+# Percentage of the requests served within a certain time (ms)
+#   50%   200
+#   90%   600
+#   95%   1200
+#   99%   3500
+        </pre>
+            </div>
+        </div>
+
+        <footer>
+            Report generated by ApacheBench &middot; Prepared by Paras Sen, Quality Assurance Engineer
+        </footer>
+    </div>
+</body>
+
+</html>

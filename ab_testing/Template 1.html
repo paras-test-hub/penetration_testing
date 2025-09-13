@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apache Bench Report</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f9;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2 {
+            color: #0056b3;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #004085;
+        }
+
+        .report-section {
+            margin-bottom: 30px;
+        }
+
+        .report-section h2 {
+            background-color: #f0f8ff;
+            padding: 10px;
+            border-left: 5px solid #007bff;
+            margin-bottom: 15px;
+        }
+
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .summary-table th,
+        .summary-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .summary-table th {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+        }
+
+        .summary-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .summary-table tr:hover {
+            background-color: #e9ecef;
+        }
+
+        .metric-box {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .metric {
+            background-color: #e9f7ef;
+            border: 1px solid #d4edda;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 8px;
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .metric h3 {
+            margin-top: 0;
+            color: #28a745;
+        }
+
+        .metric p {
+            font-size: 1.5em;
+            margin: 5px 0 0;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .key-findings {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            border-radius: 8px;
+        }
+
+        .key-findings h2 {
+            color: #856404;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            background: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23007bff" class="bi bi-check-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/></svg>') no-repeat left center;
+            background-size: 16px;
+            padding-left: 25px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Apache Bench Report: 50k Requests Analysis</h1>
+        <p style="text-align: center; font-style: italic;">Benchmarking results for api.mastersunion.in across various
+            concurrency levels.</p>
+
+        <div class="report-section">
+            <h2>Executive Summary</h2>
+            <p>This report summarizes the performance of the <code>api.mastersunion.in</code> server under three
+                different load conditions: 100, 500, and 1000 concurrent users. The tests were performed using
+                ApacheBench with 50,000 requests for each scenario. The results show that the server performs optimally
+                at a lower concurrency level, with performance degrading significantly as the number of concurrent users
+                increases beyond 500. [cite: 8, 10, 15, 19, 24, 26]</p>
+        </div>
+
+        <div class="report-section">
+            <h2>Comparative Performance Metrics</h2>
+            <table class="summary-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>100 Users</th>
+                        <th>500 Users</th>
+                        <th>1000 Users</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Requests per Second (mean)</strong></td>
+                        <td>758.15 [#/sec] </td>
+                        <td>896.20 [#/sec] </td>
+                        <td>457.28 [#/sec] </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total Requests</strong></td>
+                        <td>50,000 </td>
+                        <td>50,000 </td>
+                        <td>50,000 </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Failed Requests</strong></td>
+                        <td>8 </td>
+                        <td>101 </td>
+                        <td>35 </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Time per Request (mean)</strong></td>
+                        <td>131.900 ms </td>
+                        <td>557.914 ms </td>
+                        <td>2186.862 ms </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Median Response Time (50%)</strong></td>
+                        <td>115 ms </td>
+                        <td>409 ms </td>
+                        <td>1267 ms </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Longest Request (max)</strong></td>
+                        <td>1418 ms </td>
+                        <td>9435 ms </td>
+                        <td>70188 ms </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Transfer Rate</strong></td>
+                        <td>1289.62 Kbytes/sec </td>
+                        <td>1522.72 Kbytes/sec </td>
+                        <td>777.58 Kbytes/sec </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="report-section">
+            <h2>Detailed Test Results</h2>
+
+            <div class="report-section">
+                <h3>Test: 100 Users</h3>
+                <p>This test simulates a low to moderate load on the server. The results indicate excellent performance
+                    with high efficiency.</p>
+                <div class="metric-box">
+                    <div class="metric">
+                        <h3>Requests per Second</h3>
+                        <p>758.15 </p>
+                    </div>
+                    <div class="metric">
+                        <h3>Failed Requests</h3>
+                        <p>8 </p>
+                    </div>
+                    <div class="metric">
+                        <h3>Median Time</h3>
+                        <p>115 ms </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="report-section">
+                <h3>Test: 500 Users</h3>
+                <p>At this concurrency level, the server shows signs of strain. While the requests per second increased,
+                    so did the number of failed requests and response times.</p>
+                <div class="metric-box">
+                    <div class="metric">
+                        <h3>Requests per Second</h3>
+                        <p>896.20 </p>
+                    </div>
+                    <div class="metric">
+                        <h3>Failed Requests</h3>
+                        <p>101 </p>
+                    </div>
+                    <div class="metric">
+                        <h3>Median Time</h3>
+                        <p>409 ms </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="report-section">
+                <h3>Test: 1000 Users</h3>
+                <p>This test reveals a significant performance bottleneck. The server's ability to handle requests per
+                    second decreases, and the latency skyrockets, indicating that the server's capacity has been
+                    exceeded.</p>
+                <div class="metric-box">
+                    <div class="metric">
+                        <h3>Requests per Second</h3>
+                        <p>457.28 </p>
+                    </div>
+                    <div class="metric">
+                        <h3>Failed Requests</h3>
+                        <p>35 </p>
+                    </div>
+                    <div class="metric">
+                        <h3>Median Time</h3>
+                        <p>1267 ms </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="report-section key-findings">
+            <h2>Key Takeaways</h2>
+            <ul>
+                <li><strong>Optimal Performance at 100 Users:</strong> The server handles 100 concurrent users with a
+                    low failure rate and quick response times. </li>
+                <li><strong>Increased Load, Increased Latency:</strong> Moving from 100 to 500 users, the server's
+                    overall throughput (requests/sec) increases, but this is accompanied by a significant rise in
+                    latency and failed requests. </li>
+                <li><strong>Performance Degradation at 1000 Users:</strong> At 1000 users, the server is clearly
+                    overloaded. Requests per second drop by almost half compared to the 500-user test, and the median
+                    response time increases by over 300%. </li>
+                <li><strong>Longest Request Spikes:</strong> The maximum time for a single request jumps from 1418 ms
+                    (100 users) to over 70 seconds (1000 users), a strong indicator of severe performance issues under
+                    heavy load. [cite: 19, 26]</li>
+            </ul>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

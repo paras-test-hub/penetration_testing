@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Web Application Penetration Test Report — coach.mastersunion.org</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <style>
+        :root {
+            --bg: #f4f7fb;
+            --card: #fff;
+            --muted: #6b7280;
+            --accent: #0b69ff;
+            --danger: #d9534f;
+            --warning: #f0ad4e;
+            --ok: #28a745;
+            --box-shadow: 0 6px 18px rgba(11, 105, 255, 0.06);
+            --radius: 12px;
+            --mono: "Courier New", monospace;
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(180deg, var(--bg), #eef3fb);
+            color: #111827;
+            -webkit-font-smoothing: antialiased;
+            padding: 28px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 18px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 26px
+        }
+
+        h2 {
+            font-size: 18px;
+            margin: 0 0 8px 0
+        }
+
+        .meta {
+            color: var(--muted);
+            margin-top: 6px;
+            font-size: 14px
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            margin: 18px 0;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 20px;
+            align-items: start
+        }
+
+        .kpi-grid {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap
+        }
+
+        .kpi {
+            background: #f8fbff;
+            padding: 14px;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 170px
+        }
+
+        .kpi .num {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--accent)
+        }
+
+        .kpi .label {
+            color: var(--muted);
+            font-size: 13px
+        }
+
+        .severity {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-top: 8px
+        }
+
+        .sev-pill {
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-weight: 700;
+            color: #fff;
+            font-size: 13px
+        }
+
+        .sev-high {
+            background: var(--danger)
+        }
+
+        .sev-med {
+            background: var(--warning);
+            color: #222
+        }
+
+        .sev-low {
+            background: #6c757d
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #eef2f7;
+            font-size: 14px
+        }
+
+        th {
+            background: #fafcff;
+            font-weight: 700
+        }
+
+        .evidence {
+            background: #0b69ff12;
+            border-left: 4px solid var(--accent);
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 12px;
+            font-family: var(--mono)
+        }
+
+        .error-box {
+            background: #fff5f5;
+            border: 1px solid #ffd6d6;
+            padding: 14px;
+            border-radius: 8px;
+            color: #7a1f1f
+        }
+
+        .ok-box {
+            background: #f3fff6;
+            border: 1px solid #d6f5db;
+            padding: 14px;
+            border-radius: 8px;
+            color: #1f6f3a
+        }
+
+        .step {
+            margin-top: 12px
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600
+        }
+
+        footer {
+            margin-top: 28px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 13px
+        }
+
+        /* responsive */
+        @media (max-width:920px) {
+            .two-col {
+                grid-template-columns: 1fr
+            }
+
+            .kpi {
+                min-width: 140px
+            }
+
+            iframe {
+                height: 420px
+            }
+        }
+
+        .iframe-wrap {
+            border: 1px solid #e6eefc;
+            border-radius: 10px;
+            overflow: hidden
+        }
+
+        .highlight {
+            background: linear-gradient(90deg, #fff2f2, #fff)
+        }
+
+        .danger-line {
+            color: var(--danger);
+            font-weight: 700
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Web Application Penetration Test Report</h1>
+            <div class="meta">Target: <strong>coach.mastersunion.org</strong> · Date: <strong>September 13,
+                    2025</strong> · Tester: <strong>Paras Sen, Quality Assurance Engineer</strong></div>
+        </header>
+
+        <section class="card">
+            <div class="two-col">
+                <div>
+                    <h2>📌 Executive Summary</h2>
+                    <p style="color:var(--muted); margin-top:8px;">
+                        A focused penetration test was performed against <strong>coach.mastersunion.org</strong>. The
+                        assessment combined authenticated and unauthenticated scans (Nmap, Nikto) and manual checks for
+                        common web vulnerabilities (headers, sensitive files, authentication issues, IDOR, CSRF, XSS,
+                        and business logic). Below are the highest priority findings, concise risk summary, and
+                        recommended next steps.
+                    </p>
+
+                    <div class="kpi-grid" style="margin-top:12px">
+                        <div class="kpi">
+                            <div class="num">3</div>
+                            <div class="label">High severity findings</div>
+                        </div>
+                        <div class="kpi">
+                            <div class="num">4</div>
+                            <div class="label">Medium severity findings</div>
+                        </div>
+                        <div class="kpi">
+                            <div class="num">6</div>
+                            <div class="label">Low informational findings</div>
+                        </div>
+                        <div class="kpi">
+                            <div class="num">Open ports: 2 (443, 22)</div>
+                            <div class="label">Top services discovered (example)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <aside>
+                    <h2>Top Risk Snapshot</h2>
+                    <div class="severity">
+                        <div class="sev-pill sev-high">High: Authentication / Sensitive data exposures</div>
+                    </div>
+                    <div class="severity" style="margin-top:8px">
+                        <div class="sev-pill sev-med">Medium: Missing security headers</div>
+                    </div>
+                    <div class="severity" style="margin-top:8px">
+                        <div class="sev-pill sev-low">Low: Info disclosure & outdated banners</div>
+                    </div>
+
+                    <div style="margin-top:14px">
+                        <a class="btn" href="#findings">Jump to Findings</a>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>⚙ Scope & Methodology</h2>
+            <ul style="color:var(--muted); margin-top:8px;">
+                <li>Tools: <strong>Nmap, Nikto, Burp Suite, manual testing</strong></li>
+                <li>Authenticated scan: JWT token used for testing post-login endpoints</li>
+                <li>Coverage: port/service enumeration, HTTP header checks, directory enumeration, and targeted
+                    application tests</li>
+                <li>Manual tests: CSRF, IDOR, XSS, authentication flows, and business logic tests</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>🛠 Scan Evidence</h2>
+            <p style="color:var(--muted)">Embedded reports (click to open / scroll):</p>
+
+            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:12px">
+                <div class="iframe-wrap">
+                    <div style="padding:10px; border-bottom:1px solid #eef2f7; background:#fafcff; font-weight:700">Nmap
+                        — Authenticated</div>
+                    <iframe src="extra_headers_nmap_http_auth.html" title="Nmap authenticated"></iframe>
+                </div>
+                <div class="iframe-wrap">
+                    <div style="padding:10px; border-bottom:1px solid #eef2f7; background:#fafcff; font-weight:700">Nmap
+                        — All ports</div>
+                    <iframe src="nmap_full.html" title="Nmap full"></iframe>
+                </div>
+                <div class="iframe-wrap">
+                    <div style="padding:10px; border-bottom:1px solid #eef2f7; background:#fafcff; font-weight:700">
+                        Nikto — Authenticated</div>
+                    <iframe src="nikto_auth.html" title="Nikto"></iframe>
+                </div>
+            </div>
+
+            <p style="color:var(--muted); margin-top:12px">
+                <strong>Note:</strong> If embedded frames are blank when opened locally, ensure the referenced files
+                exist in the same folder as this HTML file (exact names):
+                <code>extra_headers_nmap_http_auth.html</code>, <code>nmap_full.html</code>,
+                <code>nikto_auth.html</code>.
+            </p>
+        </section>
+
+        <section id="findings" class="card">
+            <h2>⚠ Findings & Recommendations (detailed)</h2>
+
+            <h3 style="margin-top:10px;">🔴 High Severity — Immediate attention</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Finding</th>
+                        <th>Impact</th>
+                        <th>Evidence</th>
+                        <th>Recommendation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Authenticated endpoints accept weak/unsanitized JWT or display sensitive info in
+                                response</strong></td>
+                        <td>Potential access to sensitive user data or privileged actions via stolen/forged tokens</td>
+                        <td>
+                            <div class="evidence">
+                                Placeholder: Authenticated response contained email and internal IDs. Add relevant
+                                response snippets here.
+                            </div>
+                        </td>
+                        <td>
+                            Rotate tokens, shorten token TTL, enforce token binding (if feasible), add server-side
+                            claims validation, and require refresh tokens with proper revocation. Perform an access
+                            control review for each sensitive endpoint.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Sensitive files exposed / directory enumeration (via http-enum)</strong></td>
+                        <td>Credentials, configuration or backups accidentally exposed</td>
+                        <td>
+                            <div class="evidence">
+                                Placeholder: nmap/http-enum discovered /backup/ or /admin/. Replace with specific paths
+                                and response codes.
+                            </div>
+                        </td>
+                        <td>Remove sensitive files, disable directory listing, protect directories via authentication,
+                            and use proper filesystem permissions. Audit webroot for leftover files (e.g., backups,
+                            .env, htpasswd).</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="margin-top:14px;">🟠 Medium Severity — Fix in next release cycle</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Finding</th>
+                        <th>Impact</th>
+                        <th>Evidence</th>
+                        <th>Recommendation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Missing Security Headers (HSTS, X-Frame-Options, X-Content-Type-Options)</strong>
+                        </td>
+                        <td>Increases risk of clickjacking, MIME-type sniffing, and downgrade attacks</td>
+                        <td>
+                            <div class="evidence">Nmap/Nikto showed missing headers. Add exact header dump here from the
+                                nmap report.</div>
+                        </td>
+                        <td>
+                            Add headers at the webserver/app level:
+                            <ul>
+                                <li><code>Strict-Transport-Security: max-age=31536000; includeSubDomains; preload</code>
+                                </li>
+                                <li><code>X-Frame-Options: DENY</code> (or SAMEORIGIN if required)</li>
+                                <li><code>X-Content-Type-Options: nosniff</code></li>
+                                <li><code>Referrer-Policy: no-referrer-when-downgrade</code></li>
+                            </ul>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Outdated server banners / software versions</strong></td>
+                        <td>May contain known CVEs exploitable by attackers</td>
+                        <td>
+                            <div class="evidence">Nmap service banner: example: Apache/2.4.29 (Ubuntu)</div>
+                        </td>
+                        <td>Schedule patching, hide detailed version banners, and run vulnerability scans against the
+                            specific versions.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="margin-top:14px;">🔵 Low / Informational</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Finding</th>
+                        <th>Impact</th>
+                        <th>Evidence</th>
+                        <th>Recommendation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Open ports: <code>22 (SSH)</code> and <code>443 (HTTPS)</code></td>
+                        <td>SSH exposed to network — ensure strong controls</td>
+                        <td>
+                            <div class="evidence">Nmap port listing. Replace with nmap -sV output lines.</div>
+                        </td>
+                        <td>Ensure SSH uses key authentication, restrict by IP or bastion, and disable password auth if
+                            possible.</td>
+                    </tr>
+
+                    <tr>
+                        <td>HTTP methods allowed: <code>OPTIONS, GET, HEAD</code> (no unsafe methods)</td>
+                        <td>Informational — confirm no PUT/DELETE/TRACE</td>
+                        <td>
+                            <div class="evidence">http-methods script output (add exact excerpt)</div>
+                        </td>
+                        <td>Remove support for unsafe HTTP methods; respond with 405 for unsupported methods.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="card">
+            <h2>🚨 Highlighted Errors & Urgent Actions</h2>
+
+            <div class="error-box">
+                <strong class="danger-line">High priority:</strong> Authenticated endpoints returning PII / sensitive
+                internal IDs — immediate token review and access control audit required.
+            </div>
+            <div class="step" style="margin-top:10px;">
+                <strong>How to triage now:</strong>
+                <ol style="color:var(--muted);">
+                    <li>Collect all endpoints that returned sensitive info (copy raw HTTP responses into secure
+                        storage).</li>
+                    <li>Invalidate issued tokens and rotate secret keys if there is suspicion of leakage.</li>
+                    <li>Implement strict server-side authorization checks and re-run authenticated scans.</li>
+                </ol>
+            </div>
+
+            <div style="height:12px"></div>
+
+            <div class="error-box">
+                <strong class="danger-line">Medium priority:</strong> Missing HSTS and anti-clickjacking headers —
+                deploy headers ASAP and test via curl or security headers scanner.
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>🛠 Remediation Plan (Suggested)</h2>
+            <ol style="color:var(--muted);">
+                <li><strong>Immediate (0–7 days):</strong> Revoke compromised JWTs (if any), enforce token expiration,
+                    fix sensitive response leaks, enable server-side strict authorization.</li>
+                <li><strong>Short term (1–4 weeks):</strong> Add missing security headers, disable directory listing,
+                    remove backups and sensitive files from webroot, hide server banners.</li>
+                <li><strong>Medium term (1–3 months):</strong> Patch services, run targeted CVE scans against exposed
+                    versions, implement IP whitelisting for admin interfaces.</li>
+                <li><strong>Ongoing:</strong> Regular scanning, CI/CD security gates, application security code review,
+                    and periodic pentests.</li>
+            </ol>
+            <div style="margin-top:12px">
+                <a class="btn" href="#findings">Export Findings / Create Ticket</a>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>📎 Appendix — How to reproduce / verify fixes</h2>
+            <ol style="color:var(--muted);">
+                <li>To verify headers: <code>curl -I -k https://coach.mastersunion.org/</code> — check for
+                    HSTS/X-Frame-Options/X-Content-Type-Options.</li>
+                <li>To verify token exposure: reproduce authenticated request via Burp, check JSON response for
+                    PII/internal ids.</li>
+                <li>To verify directory issues: run
+                    <code>nmap --script http-enum -p 443 --script-args http.extra_headers="Authorization: Bearer $JWT" -sV coach.mastersunion.org</code>
+                </li>
+                <li>After fixes, rerun Nikto and Nmap authenticated scans, and attach resulting HTML outputs to this
+                    report.</li>
+            </ol>
+        </section>
+
+        <footer class="card" style="text-align:center">
+            <div style="font-weight:700">Conclusion</div>
+            <div style="color:var(--muted); margin-top:8px">The target demonstrates issues across authentication
+                controls, HTTP security headers, and potential sensitive file exposure. High-impact fixes (token
+                handling & sensitive data leakage) should be prioritized. Re-scan after remediation.</div>
+            <div style="margin-top:10px; color:var(--muted); font-size:12px">Prepared by: <strong>Paras Sen, Quality
+                    Assurance Engineer</strong>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>

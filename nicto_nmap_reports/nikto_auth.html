@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+ <title>Nikto Report</title>
+ <style type="text/css">
+  .dataTable
+  {
+   font-family: tahoma, sans-serif;
+   font-size: 11pt; 
+   font-weight: normal; 
+   color: #000066;
+   background: #EEEEEE;
+   border: thin solid black;
+   width: 95%;
+  }
+  .headerTable
+  {
+   font-family: tahoma, sans-serif;
+   font-size: 15pt; 
+   font-weight: normal; 
+   color: white;
+   background: #000066;
+   border: thin solid black;
+   width: 300px;
+  }
+  .column-head
+  {
+   width: 15em;
+   font-weight:bold;
+   vertical-align: top;
+  }
+  .copyright
+  {
+   font-family: tahoma, sans-serif;
+   font-size: 10pt;
+   font-weight: normal;
+   font-style: italic;
+   color: black;
+  }
+  body
+  {
+   background: white;
+  }
+ </style>
+</head>
+<body>
+<div>
+<a name="1"></a>
+<table class="headerTable">
+ <tr>
+   <td>coach.mastersunion.org / 13.224.163.55 port 443</td>
+ </tr>
+</table>
+<table class="dataTable">
+ <tr>
+   <td class="column-head">Target IP</td>
+   <td>13.224.163.55</td>
+ </tr>
+ <tr>
+   <td class="column-head">Target hostname</td>
+   <td>coach.mastersunion.org</td>
+ </tr>
+  <tr>
+   <td class="column-head">Target Port</td>
+   <td>443</td>
+ </tr>
+  <tr>
+   <td class="column-head">HTTP Server</td>
+   <td>AmazonS3</td>
+ </tr>
+ <tr>
+   <td class="column-head">Site Link (Name)</td>
+   <td><a href="https://coach.mastersunion.org:443/">https://coach.mastersunion.org:443/</a></td>
+ </tr>
+ <tr>
+   <td class="column-head">Site Link (IP)</td>
+   <td><a href="https://13.224.163.55:443/">https://13.224.163.55:443/</a></td>
+ </tr>
+ </table>
+</div>
+<p></p>
+
+<table class="dataTable">
+  <tr>
+    <td class="column-head">URI</td>
+    <td>/</td>
+  </tr>
+  <tr>
+    <td class="column-head">HTTP Method</td>
+    <td>GET</td>
+  </tr>
+  <tr>
+    <td class="column-head">Description</td>
+    <td>/: Retrieved via header: 1.1 d3f1c3483bfaf41ece3e65e49d3ecf80.cloudfront.net (CloudFront).</td>
+  </tr>
+  <tr>
+    <td class="column-head">Test Links</td>
+    <td>
+      <a href="https://coach.mastersunion.org:443/">https://coach.mastersunion.org:443/</a><br>
+      <a href="https://13.224.163.55:443/">https://13.224.163.55:443/</a>
+    </td>
+  </tr>
+  <tr>
+    <td class="column-head">References</td>
+    <td></td>
+</table>
+
+<table class="dataTable">
+  <tr>
+    <td class="column-head">URI</td>
+    <td>/</td>
+  </tr>
+  <tr>
+    <td class="column-head">HTTP Method</td>
+    <td>GET</td>
+  </tr>
+  <tr>
+    <td class="column-head">Description</td>
+    <td>/: The anti-clickjacking X-Frame-Options header is not present.</td>
+  </tr>
+  <tr>
+    <td class="column-head">Test Links</td>
+    <td>
+      <a href="https://coach.mastersunion.org:443/">https://coach.mastersunion.org:443/</a><br>
+      <a href="https://13.224.163.55:443/">https://13.224.163.55:443/</a>
+    </td>
+  </tr>
+  <tr>
+    <td class="column-head">References</td>
+    <td><a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options'>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options</a></td>
+</table>
+
+<table class="dataTable">
+  <tr>
+    <td class="column-head">URI</td>
+    <td>/</td>
+  </tr>
+  <tr>
+    <td class="column-head">HTTP Method</td>
+    <td>GET</td>
+  </tr>
+  <tr>
+    <td class="column-head">Description</td>
+    <td>/: The site uses TLS and the Strict-Transport-Security HTTP header is not defined.</td>
+  </tr>
+  <tr>
+    <td class="column-head">Test Links</td>
+    <td>
+      <a href="https://coach.mastersunion.org:443/">https://coach.mastersunion.org:443/</a><br>
+      <a href="https://13.224.163.55:443/">https://13.224.163.55:443/</a>
+    </td>
+  </tr>
+  <tr>
+    <td class="column-head">References</td>
+    <td><a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security'>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security</a></td>
+</table>
+
+<table class="dataTable">
+  <tr>
+    <td class="column-head">URI</td>
+    <td>/</td>
+  </tr>
+  <tr>
+    <td class="column-head">HTTP Method</td>
+    <td>GET</td>
+  </tr>
+  <tr>
+    <td class="column-head">Description</td>
+    <td>/: An alt-svc header was found which is advertising HTTP/3. The endpoint is: ':443'. Nikto cannot test HTTP/3 over QUIC.</td>
+  </tr>
+  <tr>
+    <td class="column-head">Test Links</td>
+    <td>
+      <a href="https://coach.mastersunion.org:443/">https://coach.mastersunion.org:443/</a><br>
+      <a href="https://13.224.163.55:443/">https://13.224.163.55:443/</a>
+    </td>
+  </tr>
+  <tr>
+    <td class="column-head">References</td>
+    <td><a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/alt-svc'>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/alt-svc</a></td>
+</table>
+
+<table class="dataTable">
+  <tr>
+    <td class="column-head">URI</td>
+    <td>/</td>
+  </tr>
+  <tr>
+    <td class="column-head">HTTP Method</td>
+    <td>GET</td>
+  </tr>
+  <tr>
+    <td class="column-head">Description</td>
+    <td>/: The X-Content-Type-Options header is not set. This could allow the user agent to render the content of the site in a different fashion to the MIME type.</td>
+  </tr>
+  <tr>
+    <td class="column-head">Test Links</td>
+    <td>
+      <a href="https://coach.mastersunion.org:443/">https://coach.mastersunion.org:443/</a><br>
+      <a href="https://13.224.163.55:443/">https://13.224.163.55:443/</a>
+    </td>
+  </tr>
+  <tr>
+    <td class="column-head">References</td>
+    <td><a href='https://www.netsparker.com/web-vulnerability-scanner/vulnerabilities/missing-content-type-header/'>https://www.netsparker.com/web-vulnerability-scanner/vulnerabilities/missing-content-type-header/</a></td>
+</table>
+
+<table class="dataTable">
+  <tr>
+    <td class="column-head">URI</td>
+    <td>/b8DSUsAh</td>
+  </tr>
+  <tr>
+    <td class="column-head">HTTP Method</td>
+    <td>GET</td>
+  </tr>
+  <tr>
+    <td class="column-head">Description</td>
+    <td>/b8DSUsAh: Uncommon header 'x-amz-error-message' found, with contents: The specified key does not exist.</td>
+  </tr>
+  <tr>
+    <td class="column-head">Test Links</td>
+    <td>
+      <a href="https://coach.mastersunion.org:443/b8DSUsAh">https://coach.mastersunion.org:443/b8DSUsAh</a><br>
+      <a href="https://13.224.163.55:443/b8DSUsAh">https://13.224.163.55:443/b8DSUsAh</a>
+    </td>
+  </tr>
+  <tr>
+    <td class="column-head">References</td>
+    <td></td>
+</table>
+
+<table class="dataTable">
+  <tr>
+    <td class="column-head">URI</td>
+    <td>/b8DSUsAh</td>
+  </tr>
+  <tr>
+    <td class="column-head">HTTP Method</td>
+    <td>GET</td>
+  </tr>
+  <tr>
+    <td class="column-head">Description</td>
+    <td>/b8DSUsAh: Uncommon header 'x-amz-error-detail-key' found, with contents: b8DSUsAh.</td>
+  </tr>
+  <tr>
+    <td class="column-head">Test Links</td>
+    <td>
+      <a href="https://coach.mastersunion.org:443/b8DSUsAh">https://coach.mastersunion.org:443/b8DSUsAh</a><br>
+      <a href="https://13.224.163.55:443/b8DSUsAh">https://13.224.163.55:443/b8DSUsAh</a>
+    </td>
+  </tr>
+  <tr>
+    <td class="column-head">References</td>
+    <td></td>
+</table>
+
+<table class="dataTable">
+  <tr>
+    <td class="column-head">URI</td>
+    <td>/b8DSUsAh</td>
+  </tr>
+  <tr>
+    <td class="column-head">HTTP Method</td>
+    <td>GET</td>
+  </tr>
+  <tr>
+    <td class="column-head">Description</td>
+    <td>/b8DSUsAh: Uncommon header 'x-amz-error-code' found, with contents: NoSuchKey.</td>
+  </tr>
+  <tr>
+    <td class="column-head">Test Links</td>
+    <td>
+      <a href="https://coach.mastersunion.org:443/b8DSUsAh">https://coach.mastersunion.org:443/b8DSUsAh</a><br>
+      <a href="https://13.224.163.55:443/b8DSUsAh">https://13.224.163.55:443/b8DSUsAh</a>
+    </td>
+  </tr>
+  <tr>
+    <td class="column-head">References</td>
+    <td></td>
+</table>
+
+<table class="dataTable">
+  <tr>
+    <td class="column-head">URI</td>
+    <td>/</td>
+  </tr>
+  <tr>
+    <td class="column-head">HTTP Method</td>
+    <td>GET</td>
+  </tr>
+  <tr>
+    <td class="column-head">Description</td>
+    <td>: Server banner changed from 'AmazonS3' to 'CloudFront'.</td>
+  </tr>
+  <tr>
+    <td class="column-head">Test Links</td>
+    <td>
+      <a href="https://coach.mastersunion.org:443/">https://coach.mastersunion.org:443/</a><br>
+      <a href="https://13.224.163.55:443/">https://13.224.163.55:443/</a>
+    </td>
+  </tr>
+  <tr>
+    <td class="column-head">References</td>
+    <td></td>
+</table>
+
+<table class="dataTable">
+  <tr>
+    <td class="column-head">URI</td>
+    <td>/</td>
+  </tr>
+  <tr>
+    <td class="column-head">HTTP Method</td>
+    <td>GET</td>
+  </tr>
+  <tr>
+    <td class="column-head">Description</td>
+    <td>/: The Content-Encoding header is set to &quot;deflate&quot; which may mean that the server is vulnerable to the BREACH attack.</td>
+  </tr>
+  <tr>
+    <td class="column-head">Test Links</td>
+    <td>
+      <a href="https://coach.mastersunion.org:443/">https://coach.mastersunion.org:443/</a><br>
+      <a href="https://13.224.163.55:443/">https://13.224.163.55:443/</a>
+    </td>
+  </tr>
+  <tr>
+    <td class="column-head">References</td>
+    <td><a href='http://breachattack.com/'>http://breachattack.com/</a></td>
+</table>
+
+<div>
+<p></p>
+<table class="headerTable">
+ <tr>
+  <td>Host Summary</td>
+ </tr>
+</table>
+<table  class="dataTable">
+ <tr>
+  <td class="column-head">Start Time</td>
+  <td>2025-09-13 15:19:42</td>
+ </tr>
+ <tr>
+  <td class="column-head">End Time</td>
+  <td>2025-09-13 15:20:13</td>
+ </tr>
+ <tr>
+  <td class="column-head">Elapsed Time</td>
+  <td>31 seconds</td>
+ </tr>
+ <tr>
+  <td class="column-head">Statistics</td>
+  <td>69 requests, 20 errors, 10 findings</td>
+ </tr>
+</table>
+</div>
+<p></p>
+
+<p></p>
+<table class="headerTable">
+  <tr>
+    <td>Scan Summary</td>
+  </tr>
+</table>
+<table class="dataTable">
+  <tr>
+    <td class="column-head">Software Details</td>
+    <td><a href="http://cirt.net/">Nikto 2.5.0</a></td>
+  <tr>
+    <td class="column-head">CLI Options</td>
+    <td>-h https://coach.mastersunion.org -Tuning x -C Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoie1wib2JqXCI6e1wiZmlyc3ROYW1lXCI6XCJUZXN0IEJZXCIsXCJsYXN0TmFtZVwiOlwiUGFyYXNcIixcImVtYWlsXCI6XCJwYXJhcy5zZW5AdmVudHVyZXBhY3QuY29tXCIsXCJ1aWROdW1iZXJcIjpudWxsLFwiY29ob3J0TmFtZVwiOlwiY29ob3J0IHRlc3RcIixcImNvaG9ydElkXCI6XCJjNWMzZTE3ZC02ODA1LTQxY2MtYjg4NS0yYWU4NmVlZTQ2YjhcIixcInByb2dyYW1JZFwiOlwiMWExNzE4ZGMtMjU0YS00OTEwLWExYzQtNDVmMjhmZWVjMmZmXCIsXCJwcm9ncmFtTmFtZVwiOlwiUGdUZXN0IChUZXN0KVwiLFwib3JnYW5pemF0aW9uSWRcIjpcIjc3YWEyNWQyLWQ1MmMtNGM3Yi1hZDRiLTdiN2RlMzM5ZmM0ZVwiLFwib3JnYW5pemF0aW9uTmFtZVwiOlwiTWFzdGVycycgVW5pb25cIixcIm1vYmlsZU51bWJlclwiOlwiNzY5NjM1MjYzN1wifX0iLCJpYXQiOjE3NTc3NDgzMTEsImV4cCI6MTc1NzgzNDcxMSwidHlwZSI6ImFjY2VzcyJ9.G8CD7OZ9f-0nND1hensB4xgem1qqb2sLNmZLkjIRDY4 -output nikto_auth.html -Format htm</td>
+  </tr>
+  <tr>
+    <td class="column-head">Hosts Tested</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td class="column-head">Start Time</td>
+    <td>Sat Sep 13 15:19:40 2025</td>
+  </tr>
+  <tr>
+    <td class="column-head">End Time</td>
+    <td>Sat Sep 13 15:20:13 2025</td>
+  </tr>
+  <tr>
+    <td class="column-head">Elapsed Time</td>
+    <td>33 seconds</td>
+  </tr>
+</table>
+<p></p>
+<p class="copyright">&copy; 2008 Chris Sullo</p>
+
+<!-- (c) 2008 Chris Sullo -->
+
+</body>
+</html>
+

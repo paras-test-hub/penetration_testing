@@ -1,2 +1,169 @@
-<html>
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Penetration Testing Work Showcase</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Inter, system-ui;
+            background: #0f172a;
+            color: #e6eef6;
+            margin: 0;
+            padding: 0
+        }
+
+        header {
+            padding: 20px;
+            text-align: center;
+            background: #1e293b;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1)
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 28px
+        }
+
+        p.intro {
+            max-width: 800px;
+            margin: 12px auto;
+            font-size: 15px;
+            color: #94a3b8
+        }
+
+        section {
+            max-width: 1000px;
+            margin: 32px auto;
+            padding: 0 20px
+        }
+
+        h2 {
+            margin-top: 32px;
+            font-size: 22px;
+            color: #06b6d4
+        }
+
+        .card {
+            background: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 16px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4)
+        }
+
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px
+        }
+
+        .btn {
+            background: linear-gradient(90deg, #06b6d4, #3b82f6);
+            padding: 8px 14px;
+            border-radius: 8px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.2s
+        }
+
+        .btn:hover {
+            opacity: 0.85
+        }
+
+        ul {
+            margin: 8px 0 0 16px;
+            color: #94a3b8;
+            font-size: 14px
+        }
+
+        footer {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 12px;
+            margin: 30px 0
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Penetration Testing Work Showcase</h1>
+        <p class="intro">Prepared by <strong>Paras Sen</strong>, Quality Assurance Engineer. This page presents the work
+            done during security and performance testing — covering load testing, vulnerability scanning, and web
+            application security analysis.</p>
+    </header>
+
+    <section>
+        <h2>Importance of Penetration Testing</h2>
+        <div class="card">
+            <p>Penetration testing (or ethical hacking) is crucial for
+                discovering vulnerabilities before
+                malicious actors do. It helps in strengthening application security, validating defense mechanisms,
+                ensuring
+                compliance, and building confidence before production release.</p>
+        </div>
+        </div>
+
+        <h2>AB (Apache Bench) Load Testing</h2>
+        <div class="card">
+            <p>AB testing was performed to measure throughput, latency, and server resilience under load. The following
+                files are available:</p>
+            <ul>
+                <li>Raw PDF report directly generated from ab output.</li>
+                <li>HTML report in Template 1 (clean table layout).</li>
+                <li>HTML report in Template 2 (modern styled version).</li>
+            </ul>
+            <div class="btn-group">
+                <a href="ab_testing/ab_report.pdf" target="_blank" class="btn">Open Raw PDF</a>
+                <a href="ab_testing/Template 1.html" target="_blank" class="btn">Open HTML Template 1</a>
+                <a href="ab_testing/Templete 2.html" target="_blank" class="btn">Open HTML Template 2</a>
+            </div>
+        </div>
+
+        <h2>Nmap & Nikto Reports</h2>
+        <div class="card">
+            <p>Network scanning and web server enumeration were done using Nmap and Nikto. These reports identify open
+                ports, running services, TLS versions, and web security misconfigurations.</p>
+            <ul>
+                <li>Nmap HTTP Auth Report</li>
+                <li>Nikto Auth Report</li>
+                <li>Nmap Full Scan Report</li>
+                <li>4 Combined Templates (Summary & Detailed)</li>
+            </ul>
+            <div class="btn-group">
+                <a href="nicto_nmap_reports/extra_headers_nmap_http_auth.html" target="_blank" class="btn">Nmap HTTP
+                    Auth</a>
+                <a href="nicto_nmap_reports/nikto_auth.html" target="_blank" class="btn">Nikto Auth</a>
+                <a href="nicto_nmap_reports/nmap_full.html" target="_blank" class="btn">Nmap Full</a>
+                <a href="nicto_nmap_reports/Template 1.html" target="_blank" class="btn">Combined Template 1</a>
+                <a href="nicto_nmap_reports/Template 2.html" target="_blank" class="btn">Combined Template 2</a>
+                <a href="nicto_nmap_reports/Template 3.html" target="_blank" class="btn">Combined Template 3</a>
+                <a href="nicto_nmap_reports/Template 4.html" target="_blank" class="btn">Combined Template 4</a>
+            </div>
+        </div>
+
+        <h2>OWASP ZAP Reports</h2>
+        <div class="card">
+            <p>OWASP ZAP was used for automated vulnerability scanning and to detect XSS, CSRF, and other OWASP Top 10
+                issues.</p>
+            <ul>
+                <li>ZAP PDF Report</li>
+            </ul>
+            <div class="btn-group">
+                <a href="zap/2025-09-13-ZAP-Report-.pdf" target="_blank" class="btn">Open ZAP PDF</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2025 Paras Sen — Security Testing Documentation
+    </footer>
+</body>
+
 </html>

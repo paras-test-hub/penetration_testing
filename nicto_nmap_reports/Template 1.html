@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Web Application Penetration Test Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+        }
+
+        .section {
+            background: #fff;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 1200px;
+        }
+
+        iframe {
+            width: 100%;
+            height: 700px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        ul {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Web Application Penetration Test Report</h1>
+    <h2>Target: coach.mastersunion.org</h2>
+    <p style="text-align: center;"><b>Prepared by:</b> Paras Sen, Quality Assurance Engineer</p>
+    <hr>
+    <div class="section">
+        <h2>📌 Executive Summary</h2>
+        <p>
+            This report contains the results of the penetration testing performed on <b>coach.mastersunion.org</b>.
+            The tests were focused on both infrastructure and authenticated web application vulnerabilities.
+        </p>
+        <ul>
+            <li>Total open ports discovered: [fill after review]</li>
+            <li>Authenticated endpoints tested using JWT token</li>
+            <li>Potential vulnerabilities identified (High / Medium / Low)</li>
+            <li>Recommendations provided for each finding</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>⚙ Scope & Methodology</h2>
+        <ul>
+            <li>Tools used: <b>Nmap, Nikto, Burp Suite</b></li>
+            <li>Authentication: JWT token provided for post-login scans</li>
+            <li>Infrastructure scanning (ports/services) and application scanning (headers, sensitive files,
+                misconfigurations)</li>
+            <li>Manual testing performed for logic flaws, IDOR, CSRF, and XSS</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>🛠 Nmap Scan Results (Authenticated)</h2>
+        <iframe src="extra_headers_nmap_http_auth.html"></iframe>
+    </div>
+
+    <div class="section">
+        <h2>🛠 Nmap Scan Results (All Ports)</h2>
+        <iframe src="nmap_full.html"></iframe>
+    </div>
+
+    <div class="section">
+        <h2>🛡 Nikto Scan Results</h2>
+        <iframe src="nikto_auth.html"></iframe>
+    </div>
+
+    <div class="section">
+        <h2>⚠ Findings & Recommendations</h2>
+        <ul>
+            <li>Missing HTTP headers (X-Frame-Options, HSTS, etc.) → Recommendation: Enable headers</li>
+            <li>Sensitive files discovered (htpasswd, etc.) → Recommendation: Remove/secure files</li>
+            <li>Open ports and outdated services → Recommendation: Close unnecessary ports, update software</li>
+            <li>Authenticated application vulnerabilities → Recommendation: Manual remediation based on Burp/ZAP
+                findings</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>✅ Conclusion</h2>
+        <p>
+            Overall, the target shows some misconfigurations and missing security headers, and authenticated flows
+            should be closely monitored.
+            Recommendations have been provided to mitigate the risks identified.
+        </p>
+    </div>
+</body>
+
+</html>

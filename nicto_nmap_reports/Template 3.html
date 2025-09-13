@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive Penetration Test Report - coach.mastersunion.org</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #2d3748;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Section */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            color: #718096;
+            margin-bottom: 20px;
+        }
+
+        .target-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .info-card .label {
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .info-card .value {
+            font-size: 1.1rem;
+            color: #2d3748;
+            font-weight: 500;
+        }
+
+        /* Risk Dashboard */
+        .risk-dashboard {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-header h2 {
+            font-size: 2rem;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .risk-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #fff, #f7fafc);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .metric-number {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .metric-label {
+            font-size: 1.1rem;
+            color: #718096;
+            font-weight: 500;
+        }
+
+        .high {
+            color: #e53e3e;
+        }
+
+        .medium {
+            color: #ed8936;
+        }
+
+        .low {
+            color: #38a169;
+        }
+
+        .info {
+            color: #3182ce;
+        }
+
+        /* Severity Pills */
+        .severity-overview {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .severity-pill {
+            padding: 10px 20px;
+            border-radius: 25px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .severity-pill.high {
+            background: linear-gradient(135deg, #e53e3e, #c53030);
+        }
+
+        .severity-pill.medium {
+            background: linear-gradient(135deg, #ed8936, #dd6b20);
+        }
+
+        .severity-pill.low {
+            background: linear-gradient(135deg, #38a169, #2f855a);
+        }
+
+        /* Content Sections */
+        .content-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .section-header h2 {
+            font-size: 1.8rem;
+            color: #2d3748;
+        }
+
+        /* Findings Table */
+        .findings-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .findings-table th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .findings-table td {
+            padding: 20px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: top;
+        }
+
+        .findings-table tr:nth-child(even) {
+            background: rgba(103, 126, 234, 0.02);
+        }
+
+        .findings-table tr:hover {
+            background: rgba(103, 126, 234, 0.05);
+        }
+
+        .vulnerability-row.high {
+            border-left: 5px solid #e53e3e;
+            background: rgba(229, 62, 62, 0.05);
+        }
+
+        .vulnerability-row.medium {
+            border-left: 5px solid #ed8936;
+            background: rgba(237, 137, 54, 0.05);
+        }
+
+        .vulnerability-row.low {
+            border-left: 5px solid #38a169;
+            background: rgba(56, 161, 105, 0.05);
+        }
+
+        /* Scan Results */
+        .scan-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+        }
+
+        .scan-card {
+            background: linear-gradient(135deg, #fff, #f7fafc);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .scan-card h3 {
+            color: #2d3748;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .scan-results {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        /* Evidence Boxes */
+        .evidence-box {
+            background: linear-gradient(135deg, #f7fafc, #edf2f7);
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 10px 0;
+        }
+
+        /* Recommendations */
+        .recommendation-box {
+            background: linear-gradient(135deg, #f0fff4, #e6fffa);
+            border-left: 4px solid #38a169;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 30px;
+        }
+
+        .nav-tab {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.7);
+            border: none;
+            border-radius: 10px 10px 0 0;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tab.active {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px;
+            color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            margin-top: 30px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .content-section {
+                padding: 20px;
+            }
+
+            .findings-table {
+                font-size: 0.9rem;
+            }
+
+            .findings-table th,
+            .findings-table td {
+                padding: 15px 10px;
+            }
+        }
+
+        /* Icons */
+        .icon-security::before {
+            content: "🔒";
+        }
+
+        .icon-findings::before {
+            content: "⚠️";
+        }
+
+        .icon-tools::before {
+            content: "🛠️";
+        }
+
+        .icon-recommendations::before {
+            content: "💡";
+        }
+
+        .icon-timeline::before {
+            content: "⏱️";
+        }
+    </style>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show the selected tab content
+            const selectedTab = document.getElementById(tabName);
+            if (selectedTab) {
+                selectedTab.classList.add('active');
+            }
+
+            // Add active class to the clicked tab button
+            event.target.classList.add('active');
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <h1>Comprehensive Penetration Test Report</h1>
+            <div class="subtitle">Security Assessment for coach.mastersunion.org</div>
+
+            <div class="target-info">
+                <div class="info-card">
+                    <div class="label">Target Domain</div>
+                    <div class="value">coach.mastersunion.org</div>
+                </div>
+                <div class="info-card">
+                    <div class="label">IP Address</div>
+                    <div class="value">13.224.163.32 / 13.224.163.55</div>
+                </div>
+                <div class="info-card">
+                    <div class="label">Test Date</div>
+                    <div class="value">September 13, 2025</div>
+                </div>
+                <div class="info-card">
+                    <div class="label">Tools Used</div>
+                    <div class="value">Nmap 7.95, Nikto 2.5.0</div>
+                </div>
+                <div class="info-card">
+                    <div class="label">Test Duration</div>
+                    <div class="value">~55 minutes</div>
+                </div>
+                <div class="info-card">
+                    <div class="label">Services Found</div>
+                    <div class="value">FTP(21), HTTP(80), HTTPS(443)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Risk Dashboard -->
+        <div class="risk-dashboard">
+            <div class="dashboard-header">
+                <h2>🛡️ Security Risk Overview</h2>
+                <p>Comprehensive analysis of identified vulnerabilities and security posture</p>
+            </div>
+
+            <div class="risk-metrics">
+                <div class="metric-card">
+                    <div class="metric-number high">3</div>
+                    <div class="metric-label">High Risk Findings</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number medium">4</div>
+                    <div class="metric-label">Medium Risk Findings</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number low">6</div>
+                    <div class="metric-label">Low Risk / Info</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number info">3</div>
+                    <div class="metric-label">Open Ports</div>
+                </div>
+            </div>
+
+            <div class="severity-overview">
+                <div class="severity-pill high">
+                    🚨 Critical: Authentication & Data Exposure
+                </div>
+                <div class="severity-pill medium">
+                    ⚠️ Medium: Missing Security Headers
+                </div>
+                <div class="severity-pill low">
+                    ℹ️ Low: Configuration Issues
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('findings')">🔍 Security Findings</button>
+            <button class="nav-tab" onclick="showTab('scans')">🛠️ Scan Results</button>
+            <button class="nav-tab" onclick="showTab('recommendations')">💡 Recommendations</button>
+            <button class="nav-tab" onclick="showTab('timeline')">⏱️ Scan Timeline</button>
+        </div>
+
+        <!-- Security Findings Tab -->
+        <div id="findings" class="tab-content active">
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon icon-findings"
+                        style="background: linear-gradient(135deg, #e53e3e, #c53030);"></div>
+                    <h2>Critical Security Findings</h2>
+                </div>
+
+                <table class="findings-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 20%;">Vulnerability</th>
+                            <th style="width: 15%;">Severity</th>
+                            <th style="width: 25%;">Impact</th>
+                            <th style="width: 40%;">Evidence & Recommendation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="vulnerability-row high">
+                            <td>
+                                <strong>JWT Token Exposure</strong><br>
+                                <small>Authenticated endpoints leak sensitive data</small>
+                            </td>
+                            <td><span class="severity-pill high">HIGH</span></td>
+                            <td>
+                                Potential unauthorized access to user data, privilege escalation, account takeover
+                            </td>
+                            <td>
+                                <div class="evidence-box">
+                                    JWT contains: firstName:"Test BY", lastName:"Paras",
+                                    email:"paras.sen@venturepact.com", cohortId, programId
+                                </div>
+                                <div class="recommendation-box">
+                                    <strong>Action:</strong> Rotate tokens immediately, implement short TTL (15min),
+                                    add server-side validation, enable refresh token mechanism
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr class="vulnerability-row high">
+                            <td>
+                                <strong>Directory Enumeration</strong><br>
+                                <small>Sensitive paths potentially exposed</small>
+                            </td>
+                            <td><span class="severity-pill high">HIGH</span></td>
+                            <td>
+                                Exposure of backup files, configuration data, administrative interfaces
+                            </td>
+                            <td>
+                                <div class="evidence-box">
+                                    Nmap http-enum discovered accessible paths.
+                                    AWS S3 error messages reveal internal structure.
+                                </div>
+                                <div class="recommendation-box">
+                                    <strong>Action:</strong> Disable directory listing, remove backup files,
+                                    implement proper access controls
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr class="vulnerability-row medium">
+                            <td>
+                                <strong>Missing Security Headers</strong><br>
+                                <small>Multiple critical headers absent</small>
+                            </td>
+                            <td><span class="severity-pill medium">MEDIUM</span></td>
+                            <td>
+                                Clickjacking attacks, MIME-type confusion, SSL downgrade attacks
+                            </td>
+                            <td>
+                                <div class="evidence-box">
+                                    Missing: X-Frame-Options, Strict-Transport-Security,
+                                    X-Content-Type-Options, Referrer-Policy
+                                </div>
+                                <div class="recommendation-box">
+                                    <strong>Action:</strong> Implement all security headers at CloudFront/S3 level
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr class="vulnerability-row medium">
+                            <td>
+                                <strong>Server Banner Information</strong><br>
+                                <small>Version disclosure</small>
+                            </td>
+                            <td><span class="severity-pill medium">MEDIUM</span></td>
+                            <td>
+                                Information gathering for targeted attacks, version-specific exploits
+                            </td>
+                            <td>
+                                <div class="evidence-box">
+                                    Server: AmazonS3, CloudFront
+                                    Banner changed during scan: AmazonS3 → CloudFront
+                                </div>
+                                <div class="recommendation-box">
+                                    <strong>Action:</strong> Configure custom server headers, hide version information
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr class="vulnerability-row low">
+                            <td>
+                                <strong>BREACH Attack Vector</strong><br>
+                                <small>Content-Encoding: deflate</small>
+                            </td>
+                            <td><span class="severity-pill low">LOW</span></td>
+                            <td>
+                                Potential information leakage through compression side-channel
+                            </td>
+                            <td>
+                                <div class="evidence-box">
+                                    Content-Encoding: deflate header present
+                                    Compression ratio attacks possible
+                                </div>
+                                <div class="recommendation-box">
+                                    <strong>Action:</strong> Disable compression for sensitive responses, implement CSRF
+                                    tokens
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr class="vulnerability-row low">
+                            <td>
+                                <strong>AWS Error Headers</strong><br>
+                                <small>Information disclosure</small>
+                            </td>
+                            <td><span class="severity-pill low">LOW</span></td>
+                            <td>
+                                Minor information leakage about AWS infrastructure
+                            </td>
+                            <td>
+                                <div class="evidence-box">
+                                    x-amz-error-code: NoSuchKey
+                                    x-amz-error-message: The specified key does not exist
+                                    x-amz-error-detail-key: [path]
+                                </div>
+                                <div class="recommendation-box">
+                                    <strong>Action:</strong> Configure custom error pages, suppress AWS headers
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Scan Results Tab -->
+        <div id="scans" class="tab-content">
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon icon-tools" style="background: linear-gradient(135deg, #3182ce, #2c5282);">
+                    </div>
+                    <h2>Detailed Scan Results</h2>
+                </div>
+
+                <div class="scan-grid">
+                    <div class="scan-card">
+                        <h3>🔍 Nmap Port Scan Results</h3>
+                        <div class="scan-results">
+                            # Nmap 7.95 Scan Report
+                            # Target: coach.mastersunion.org (13.224.163.32)
+                            # Scan Time: 2025-09-13 13:12:37 - 14:07:06 (55 min)
+
+                            PORT STATE SERVICE VERSION
+                            21/tcp open ftp
+                            80/tcp open http Amazon CloudFront httpd
+                            443/tcp open http Amazon CloudFront httpd
+
+                            # Additional Details:
+                            - 65532 ports filtered (no response)
+                            - Host is behind CloudFront CDN
+                            - PTR: server-13-224-163-32.del51.r.cloudfront.net
+                        </div>
+                    </div>
+
+                    <div class="scan-card">
+                        <h3>🛡️ Nikto Web Vulnerability Scan</h3>
+                        <div class="scan-results">
+                            # Nikto 2.5.0 Scan Report
+                            # Target: https://coach.mastersunion.org:443
+                            # Scan Time: 2025-09-13 15:19:42 - 15:20:13 (31 sec)
+                            # Requests: 69, Errors: 20, Findings: 10
+
+                            FINDINGS:
+                            ✗ Missing X-Frame-Options header
+                            ✗ Missing Strict-Transport-Security header
+                            ✗ Missing X-Content-Type-Options header
+                            ✗ BREACH attack vector (deflate compression)
+                            ✗ Uncommon AWS headers exposed
+                            ✗ Server banner information disclosure
+                            ✗ HTTP/3 Alt-Svc header present
+                        </div>
+                    </div>
+
+                    <div class="scan-card">
+                        <h3>🔐 Authenticated Endpoint Analysis</h3>
+                        <div class="scan-results">
+                            # Authenticated Scan with JWT Token
+                            # Additional Headers: Authorization Bearer [JWT]
+
+                            HTTP METHODS ALLOWED:
+                            - GET, HEAD, OPTIONS (Safe methods only)
+                            - No PUT/DELETE/TRACE detected
+
+                            HTTP HEADERS ANALYSIS:
+                            - Content-Type: text/html
+                            - Server: AmazonS3 / CloudFront
+                            - Cache-Control: max-age=0
+                            - X-Cache: RefreshHit from cloudfront
+                            - Via: CloudFront distribution
+
+                            SECURITY GAPS:
+                            - No HSTS enforcement
+                            - No anti-clickjacking protection
+                            - Cache control may expose sensitive data
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recommendations Tab -->
+        <div id="recommendations" class="tab-content">
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon icon-recommendations"
+                        style="background: linear-gradient(135deg, #38a169, #2f855a);"></div>
+                    <h2>Security Recommendations</h2>
+                </div>
+
+                <div class="recommendation-box">
+                    <h3>🚨 Immediate Actions (0-7 days)</h3>
+                    <ol>
+                        <li><strong>JWT Security Overhaul:</strong>
+                            <ul>
+                                <li>Immediately rotate all JWT signing keys</li>
+                                <li>Reduce token expiration to 15 minutes maximum</li>
+                                <li>Implement refresh token mechanism with proper revocation</li>
+                                <li>Add server-side token validation and claims verification</li>
+                                <li>Review all authenticated endpoints for data leakage</li>
+                            </ul>
+                        </li>
+                        <li><strong>Access Control Audit:</strong>
+                            <ul>
+                                <li>Implement strict authorization checks on all endpoints</li>
+                                <li>Remove or secure any exposed backup/admin directories</li>
+                                <li>Enable proper authentication for sensitive resources</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="recommendation-box">
+                    <h3>⚠️ Short-term Fixes (1-4 weeks)</h3>
+                    <ol>
+                        <li><strong>Security Headers Implementation:</strong>
+                            <ul>
+                                <li>Strict-Transport-Security: max-age=31536000; includeSubDomains; preload</li>
+                                <li>X-Frame-Options: DENY</li>
+                                <li>X-Content-Type-Options: nosniff</li>
+                                <li>Referrer-Policy: strict-origin-when-cross-origin</li>
+                                <li>Content-Security-Policy: [implement based on application needs]</li>
+                            </ul>
+                        </li>
+                        <li><strong>Infrastructure Hardening:</strong>
+                            <ul>
+                                <li>Configure custom error pages to hide AWS error details</li>
+                                <li>Implement proper logging and monitoring</li>
+                                <li>Review FTP service necessity (port 21)</li>
+                                <li>Configure CloudFront security headers</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="recommendation-box">
+                    <h3>💡 Long-term Improvements (1-3 months)</h3>
+                    <ol>
+                        <li><strong>Security Architecture:</strong>
+                            <ul>
+                                <li>Implement Web Application Firewall (WAF)</li>
+                                <li>Set up automated security scanning in CI/CD</li>
+                                <li>Establish incident response procedures</li>
+                                <li>Regular penetration testing schedule</li>
+                            </ul>
+                        </li>
+                        <li><strong>Monitoring & Compliance:</strong>
+                            <ul>
+                                <li>Implement security information and event management (SIEM)</li>
+                                <li>Regular vulnerability assessments</li>
+                                <li>Security awareness training for development team</li>
+                                <li>Compliance audit preparation</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timeline Tab -->
+        <div id="timeline" class="tab-content">
+            <div class="content-section">
+                <div class="section-header">
+                    <div class="section-icon icon-timeline"
+                        style="background: linear-gradient(135deg, #ed8936, #dd6b20);"></div>
+                    <h2>Scan Timeline & Methodology</h2>
+                </div>
+
+                <table class="findings-table">
+                    <thead>
+                        <tr>
+                            <th>Tool</th>
+                            <th>Version</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Duration</th>
+                            <th>Results</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Nmap (Full Port Scan)</strong></td>
+                            <td>7.95</td>
+                            <td>13:12:37</td>
+                            <td>14:07:06</td>
+                            <td>54 min 29 sec</td>
+                            <td>3 open ports, 65532 filtered</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Nmap (Authenticated)</strong></td>
+                            <td>7.95</td>
+                            <td>14:46:52</td>
+                            <td>14:47:13</td>
+                            <td>21 sec</td>
+                            <td>HTTP headers, methods, security analysis</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Nikto</strong></td>
+                            <td>2.5.0</td>
+                            <td>15:19:42</td>
+                            <td>15:20:13</td>
+                            <td>31 sec</td>
+                            <td>69 requests, 10 findings</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="recommendation-box">
+                    <h3>🔬 Testing Methodology</h3>
+                    <ul>
+                        <li><strong>Infrastructure Scanning:</strong> Full TCP port scan (1-65535) with service
+                            detection</li>
+                        <li><strong>Web Application Testing:</strong> Directory enumeration, header analysis, method
+                            testing</li>
+                        <li><strong>Authenticated Testing:</strong> JWT token analysis with custom authorization headers
+                        </li>
+                        <li><strong>Security Headers Analysis:</strong> OWASP recommended security headers verification
+                        </li>
+                        <li><strong>Vulnerability Assessment:</strong> CVSS scoring and risk categorization</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <h3>📋 Report Summary</h3>
+            <p>This comprehensive penetration test identified multiple security vulnerabilities requiring immediate
+                attention.
+                Priority should be given to JWT token security and authentication controls.</p>
+            <br>
+            <p><strong>Prepared by:</strong> Paras Sen, Quality Assurance Engineer</p>
+            <p><strong>Report Date:</strong> September 13, 2025</p>
+            <p><strong>Contact:</strong> For questions regarding this assessment, please contact the security team.</p>
+        </div>
+    </div>
+</body>
+
+</html>
